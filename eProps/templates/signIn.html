@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>    
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+	<title>Sign in</title>
+	<link type="text/css" rel="stylesheet" href="static/signInStyle.css" />
+</head>
+	
+<body>
+	<div id="main">
+		<!-- This displays the logo and the heading Sign in -->
+		<div id="heading">
+			<img id="logo" src="{{logo}}" alt="{{logo}}" />
+			<h1>Sign in</h1>
+		</div><br class="floatClear" />
+		<!-- Allows the user to input their details -->
+		<form action="checkUser" method="post">
+			Email:<br /> 
+			<input type="text" name="email" required /><br /><br />
+			Password:<br />
+			<input type="password" name="password" required /><br />
+			<!-- Once these details are submitted they are checked to see if they are registered if not an error is displayed -->
+			<p class="error">{{errNotUser}}</p>
+			<input type="submit" value="Sign in" />
+		</form><br /><hr />
+		
+		<!-- A button to allow the user to go to the registration page -->
+		<p>If you are new to Eagle Properties,<br />you can register your free account now!</p>
+		<form action="toReg" method="post">
+			<input type="submit" value="Create an Eagle account" />
+		</form><br /><hr />
+
+		<!-- A button to allow the user to go to the home page -->
+		<p>Otherwise, return to the homepage.<br />Browse more, and find a property you love.
+		<form action="/" method="get">
+			<input type="submit" value="Return to Homepage" />
+		</form>
+	</div>
+</body>
+
+</html>

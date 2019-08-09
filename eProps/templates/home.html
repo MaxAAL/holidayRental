@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang=en>  
+
+<head>    
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Eagle Properties</title>
+	<link type="text/css" rel="stylesheet" href="static/genStyle.css" />
+	<script src="static/genFuncs.js"></script>
+</head>  
+
+<body onload="showSign('{{userInfo[0]}}'); showAdmin('{{userInfo[0]}}');">
+	<header>		
+		<!-- This displays the logo, which acts as a link to the homepage when clicked -->
+		<form action="toHome" method="post" class="floatLeft">
+			<!-- This passes the user's email to the linked page -->
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="image" src="{{logo}}" alt="{{logo}}" />
+		</form>
+		
+		<!-- This button takes you to the Admin page when signed in as an admin -->		
+		<form action="toAdmin" method="post">
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Admin" id="admin" />
+		</form>
+
+		<!-- This button takes you to the sign in page (displayed when no user is signed in) -->
+		<form action="toSignIn" method="post">
+			<input type="submit" value="Sign in" id="signIn" />
+		</form>
+
+		<!-- This button allows a user to sign out and remain on the homepage (displayed when a user is signed in) -->
+		<form action="signOut" method="post">
+			<input type="submit" value="Sign out" id="signOut" />
+		</form>
+		
+		<!-- This is a persoaniled greeting which uses the users first name when signed in, otherwise displays "Guest" -->
+		<p>Hello, {{userInfo[2]}}.</p>
+		
+		<!-- The company name as the title of the page -->
+		<h1>Eagle Properties</h1>
+	</header><br class="floatClear" />
+
+	<div class="clearfix">
+		<!-- This table contains the filter and all properties -->
+		<table id="homeTable">
+			<tr><td id="filter">
+				<form action="homeFil" method="post" class="filBttn inlineBlock">
+					<!-- These allow users to filter properties based on the minimum and maximum prices they enter -->
+					<div class="inlineBlock">Minimum Price (£): <input type="text" value="{{filItems[0]}}" name="lowPrice" /></div>
+					<div class="inlineBlock">Maximum Price (£):	<input type="text" value="{{filItems[1]}}" name="highPrice" /></div>
+					
+					<!-- This allows users to filter properties based on the minimum rating they select -->
+					<div class="inlineBlock">Minimum Rating: <select name="rating">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select></div>
+					
+					<!-- This allows users to filter properties based on the property's country they select -->
+					<div class="inlineBlock">Country: <select name="country">
+						<option value=""></option>
+						<option value="zambia">Zambia</option>
+					</select></div><br /><br />
+					
+					<!-- This button applies the filter -->
+					<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+					<div class="inlineBlock"><input type="submit" value="Apply filter" class="Bttn2" /></div>
+				</form><br />
+				
+				<!-- This button clears the filter -->				
+				<form action="toHome" method="post" class="filBttn inlineBlock">
+					<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+					<input type="submit" value="Clear filter" class="Bttn2" />
+				</form>
+				
+				<!-- An error is displyed if the user enters an invalid price -->
+				<p class="error">{{errPrice}}</p>
+			</td></tr>
+
+			<!-- Uses a for loop to create a new section for each property -->
+			{% for line in propList %}
+			<tr><td class="clearfix">
+				<!-- The left side of the property section contains the image -->
+				<div class="inlineBlock floatLeft clearfix" style="max-width: 40%;">
+					<img id="homePageImg" src="static/gallery/{{line[1]}}" alt="{{line[1]}}" class="floatLeft" />
+				</div>
+				
+				<!-- The rest of the property contains the property details -->
+				<div id="availProps" class="inlineBlock">
+					<div id="propDesc" class="clearfix">
+						<h3 class="underline">{{line[2]}}</h3>
+						<p>Country:  {{line[4]}}</p>
+						<p>Price per Night (£):  {{line[5]}}</p>
+						<p>Rating:  {{line[6]}} / 5</p>
+					</div>
+
+					<!-- This button takes the user to the property page for this property -->
+					<form action="toProp" method="post" id="viewProp">
+						<!-- The property code is passed here -->
+						<input type="hidden" value="{{line[0]}}" name="propName" />
+						<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+						<input type="submit" value="View Property" class="Bttn1" />
+					</form>
+				</div><br class="floatClear" />
+			</td></tr>
+			{% endfor %}
+		</table>
+	</div>
+	
+	<!-- The footer displays the company's contact information -->
+	<footer class="clearfix">
+		<h3 id="conTitle">Contact Information</h3><hr class="floatClear" />
+		<div class="inlineBlock halfWidth">
+			<p>Name:  Eagle Properties UK Limited</p>
+			<p>Email:  eproperties57@gmail.com</p>
+			<p>Cell:  +44 79645 700700</p>
+		</div>
+
+		<div id="coAddress" class="inlineBlock halfWidth">
+			<p>Address:  Norwich Research Park, Earlham Road, Norwich</p>
+			<p>County:  Norfolk</p>
+			<p>Postcode:  NR4 7TJ</p>
+		</div>
+	</footer>
+</body>
+
+</html>

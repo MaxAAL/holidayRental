@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>    
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+	<title>Images</title>
+	<link type="text/css" rel="stylesheet" href="static/genStyle.css" />
+</head>
+	
+<body>
+	<header>
+		<!-- This displays the logo, which acts as a link to the homepage when clicked -->
+		<form action="toHome" method="post" class="floatLeft">
+			<!-- This passes the user's email to the linked page -->
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="image" src="{{logo}}" alt="{{logo}}" />
+		</form>
+		
+		<!-- The company name as the title of the page -->
+		<h1>Eagle Properties</h1>
+	</header><br class="floatClear" />
+	
+	<div id="main">
+		<!-- This button returns the user to the property page, by passing the propery code -->
+		<form action="toProp" method="post" class="inlineBlock floatRight">
+			<input type="hidden" value="{{propInfo[0]}}" name="propName" />
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Back to Property Page" class="Bttn1" />
+		</form>
+
+		<!-- This button takes you back to the homepage -->
+		<form action="toHome" method="post" class="inlineBlock">
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Back to Homepage" class="Bttn1" />
+		</form>
+		<br class="floatClear" /><br />
+		
+		<!-- The embedded map is contained within the following ifrmae tag -->
+		<h2>Map</h2>
+		<iframe src="{{propInfo[8]}}" width="400" height="300" style="border: 1px solid black; max-width: 100%;" allowfullscreen></iframe>
+		<br />
+		
+		<!-- Each of the next sections displayed on the webpage contain information on surrounding attractions, link sto supporting pages and a number of images -->
+		{% for row in attracs %}
+		<br /><br /><hr /><br />
+		<div id="attrac">
+			<h2>{{row[0]}}</h2>
+			<p>{{row[1]}}</p>
+			<a href="{{row[2]}}">{{row[3]}}</a><br /><br />
+			{% for img in row[5] %}
+				<img src="static/{{img}}" alt="{{img}}" id="attracImg" />
+			{% endfor %}<br />
+		</div>
+		{% endfor %}
+	</div>
+</body>
+
+</html>

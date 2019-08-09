@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang=en>
+ 
+<head>    
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+	<title>Admin</title>
+	<link type="text/css" rel="stylesheet" href="static/genStyle.css" />
+	<script src="static/genFuncs.js"></script>
+</head>
+
+<body onload="showHome('{{userInfo[0]}}')">
+	<header>
+		<!-- This displays the logo and passes in the user's Email it also allows the user to return to the homepage if the logo is clicked-->
+		<form action="toHome" method="post" class="floatLeft">
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="image" src="{{logo}}" alt="{{logo}}" />
+		</form>
+		<h1>Eagle Properties - Admin</h1>
+		<!-- Displays the home button -->
+		<form action="toHome" method="post">
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Home" id="home" />
+		</form>
+	</header><br class="floatClear" />
+	
+	<div id="main" class="clearfix">
+		<div class="floatRight">
+			<!-- These are all of the filters available to the admins to sort through bookings -->
+			<form action="adminFil" method="post" class="filBttn inlineBlock">	
+				<!-- This filter allows the admin user to filter based on the property that they have selected -->
+				<div class="inlineBlock">Property Name: <select name="propName">
+					<option value=""></option>
+					{% for prop in propList %}
+						<option value="{{prop[0]}}">{{prop[0]}}</option>
+					{% endfor %}
+				</select></div>
+				<!-- This allows the admin user to filter based on if the user wants past or current bookings -->
+				<div class="inlineBlock">Time Period: <select name="bookPeriod">
+					<option value=""></option>
+					<option value="curr">Current Bookings</option>
+					<option value="past">Past Bookings</option>
+				</select></div>
+				 
+				<!-- This allows the admin user to filter based on if the user wants confirmed or unconfirmed bookings -->
+				<div class="inlineBlock">Confirmed Bookings: <select name="bookConf">
+					<option value=""></option>
+					<option value="conf">Yes</option>
+					<option value="unconf">No</option>
+				</select></div>
+				
+				<!-- This displays the sumbit button which runs the filter functions when clicked -->
+				<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+				<div class="inlineBlock"><input type="submit" value="Apply filter" class="Bttn2" /></div>
+			</form>
+			
+			<!-- This displays the clear filter button that removes all of the filters when clicked -->
+			<form action="toAdmin" method="post" class="filBttn inlineBlock">
+					<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+					<input type="submit" value="Clear filter" class="Bttn2" />
+				</form>
+		</div><br class="floatClear" /><br /><hr />
+		
+		<h1>Bookings</h1>
+		<!-- This displays all of the needed information about the bookings being held -->
+		<table id="adminTable">
+			<tr>
+				<th>Booking ID</th>
+				<th>Property Name</th>
+				<th>User Email</th>
+				<th>Arrival Date</th>
+				<th>Departure Date</th>
+				<th>Total Price (£)</th>
+				<th>Confirmed?</th>
+			</tr>			
+			<!-- This is run for the number of bookings being held so that they are all displayed -->
+			{% for booking in bookAdmin %}
+			<tr>
+				{% for item in booking %}
+				<td>
+					{{item}}
+				</td>
+				{% endfor %}
+				<!-- buttons to confirm/delete booking -->
+				<td>
+					<form action="confirm" method="post" class="inline">
+						<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+						<input type="hidden" value="{{booking[0]}}" name="bookId" />
+						<input type="submit" value="Confirm/Not" class="adminBttn Bttn2" />
+					</form>
+					
+					<form action="delete" method="post" class="inline">
+						<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+						<input type="hidden" value="{{booking[0]}}" name="bookId" />
+						<input type="submit" value="Delete" class="adminBttn Bttn2" />
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		<table>
+	</div>
+</body>
+
+</html>

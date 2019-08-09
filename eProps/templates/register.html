@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>    
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+	<title>Register</title>
+	<link type="text/css" rel="stylesheet" href="static/signInStyle.css" />
+</head>
+	
+<body>
+	<!-- This displays the logo and the heading register -->
+	<div id="main">
+		<div id="heading" class="clearfix">
+			<img id="logo" src="{{logo}}" alt="{{logo}}" />
+			<h1>Register</h1>
+		</div><br />
+		 <!-- This creastes a form that allows the user to register an account -->
+		<form action = "addUser" method = "post" >
+			(Fields marked * are compulsory)<br /><br />
+			 <!-- This section asks the user for their details e.g. email and validates it using python. If valid the data is registered is not an error is displayed --> 
+			* Email:<br />
+			<input type="text" name="email" value="{{newUser[0]}}" required /><br />
+			<p class="error">{{errList[0]}}{{errOldEmail}}</p>
+			* Password (Min. 8 characters):<br />
+			<input type="password" name="password" required /><br />
+			<p class="error">{{errList[1]}}</p>
+			* Confirm Password:<br />
+			<input type="password" name="conPassword" required /><br />
+			<p class="error">{{errDiffPass}}</p>
+			* First Name:<br />
+			<input type="text" name="fName" value="{{newUser[2]}}" required /><br /><p></p>
+			* Last Name:<br />
+			<input type="text" name="lName" value="{{newUser[3]}}" required /><br /><p></p>
+			Phone Number:<br />
+			<input type="text" name="areaCode" value="{{newUser[4]}}" class="inlineBlock" />
+			<input type="text" name="phoneNo" value="{{newUser[5]}}" class="inlineBlock" /><br />
+			<p class="error">{{errList[2]}}</p>
+			<p class="error">{{errList[3]}}</p>
+			Post Code (UK):<br />
+			<input type="text" name="postCode" value="{{newUser[6]}}" /><br />
+			<p class="error">{{errList[4]}}</p>
+			 <!-- The submit button -->
+			<input type="submit" value="Register!" />
+		</form><br />
+		 <!-- Takes the user back to the sign in page -->
+		<form action="toSignIn" method="post">
+			<input type="submit" value="Back to Sign in" />
+		</form>
+	</div>
+</body>
+
+
+</html>

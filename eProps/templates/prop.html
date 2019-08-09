@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang=en> 
+ 
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Property</title>
+	<link type="text/css" rel="stylesheet" href="static/genStyle.css" />
+	<script src="static/genFuncs.js"></script>
+</head>
+
+<body onload="revBar('{{propInfo[6]}}','{{revCount[0]}}','{{revCount[1]}}','{{revCount[2]}}','{{revCount[3]}}','{{revCount[4]}}'); showBookRev('{{userInfo[0]}}'); showAlert('{{errDate}}'); hideRevs('{{revBttn}}');">
+	<header>
+		<!-- This displays the logo, which acts as a link to the homepage when clicked -->
+		<form action="toHome" method="post" class="floatLeft">
+			<!-- This passes the user's email to the linked page -->
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="image" src="{{logo}}" alt="{{logo}}" />
+		</form>
+		
+		<!-- The company name as the title of the page -->
+		<h1>Eagle Properties</h1>
+	</header><br class="floatClear" />
+	
+	<div id="main">
+		<!-- This button takes you to the images page for a property, which contains surrounding attractions -->
+		<form action="toImages" method="post" class="inlineBlock floatRight">
+			<!-- This property code is passed here -->
+			<input type="hidden" value="{{propInfo[0]}}" name="propName" />
+			<!-- The user's email is passed here -->
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Extra info and images" class="Bttn1" />
+		</form>
+		
+		<!-- This button takes you back to the homepage -->
+		<form action="toHome" method="post" class="inlineBlock">
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<input type="submit" value="Back to Homepage" class="Bttn1" />
+		</form>
+		<br class="floatClear" /><br />
+		
+		<!-- A red message displays an error if entered dates for a booking are already in bookings.csv, or if the deaprture date is before the arrival date -->
+		<!-- Otherwise, the message is displayed as green and says "Your booking was successful." -->
+		<div class="alert" id="al">
+			<!-- This "x" sign acts a close button for the message -->
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			{{errDate}}
+		</div><br />
+		
+		<div class="clearfix">
+			<!-- This is the gallery containing images of the property -->
+			<div id="gallery" class="inlineBlock">			
+				<div class="clearfix">
+					<!-- The selected image is enlarged within this section -->
+					<img id="expandedImg" src="static/gallery/{{propInfo[1]}}" />
+				</div>
+				
+				<!-- This smaller image shows a thumbnail of the property's main image -->
+				<div class="column">
+					<img src="static/gallery/{{propInfo[1]}}" alt="{{propInfo[1]}}" onclick="openImg(this);" />
+				</div>
+				
+				<!-- These smaller images show the thumbnails of the property's other images -->
+				{% for img in propInfo[9] %}
+					<div class="column">
+						<img src="static/{{img}}" alt="{{img}}" onclick="openImg(this);" />
+					</div>
+				{% endfor %}
+			</div>
+			
+			<!-- This section contains information for the property -->
+			<div id="propDets" class="inlineBlock vtop">
+				<h3 class="underline">{{propInfo[2]}}</h3>
+				<p>{{propInfo[3]}}</p><hr />
+				<p>Country:  {{propInfo[4]}}</p>
+				<p>Price per Night (£):  {{propInfo[5]}}</p>
+				<p>Rating:  {{propInfo[6]}} / 5</p>
+			</div>
+		</div><br class="floatClear" /><hr /><br />
+		
+		<div class="clearfix">
+			<!-- The average rating of the property is displayed as a green and red bar -->
+			<!-- It uses flex-grow in the CSS, and revBar() in the JavaScript (JS) to adjust the proportion of each section -->
+			<div class="inlineBlock">
+				<p class="bold">Overall Rating</p>
+				<div id="revMain">
+					<div id="revGreen" style="background-color: green;"></div>
+					<div id="revRed" style="background-color: red;"></div>
+				</div>
+			</div>
+			
+			<div class="inlineBlock floatRight vtop">
+				<!-- This is another bar to display the breakdown of reviews, i.e. the proportion of each rating given -->
+				<div class="inlineBlock vtop">
+					<p class="bold">Review Breakdown</p>
+					<div id="revComp">
+						<div id="r5" style="background-color: darkgreen;"></div>
+						<div id="r4" style="background-color: green;"></div>
+						<div id="r3" style="background-color: yellow;"></div>
+						<div id="r2" style="background-color: red;"></div>
+						<div id="r1" style="background-color: darkred;"></div>
+					</div>
+				</div>
+				
+				<!-- This key shows what the colours on the Review Breakdown bar represent -->
+				<div class="inlineBlock">
+					<p> <span style="background-color: darkgreen; color: darkgreen;">k</span> = Very positive reviews</p>
+					<p> <span style="background-color: green; color: green;">k</span> = Positive reviews</p>
+					<p> <span style="background-color: yellow; color: yellow;">k</span> = Mixed reviews</p>
+					<p> <span style="background-color: red; color: red;">k</span> = Negative reviews</p>
+					<p> <span style="background-color: darkred; color: darkred;">k</span> = Very negative reviews</p>
+				</div>
+			</div><br class="floatClear" />
+		</div>
+		<br /><hr /><br />
+		
+		<h2>Book This Property</h2>
+		<!-- An error message is displayed in the "Book This Property" section if no user is signed in -->
+		<p class="error">{{errNoUser[0]}}</p>
+		<form action="addBook" method="post" id="addBook">
+			<!-- Dates for the user's booking are entered here, with the mimimum accepted date being today's date -->
+			<div class="inlineBlock">Arrival date: <input type="date" name="start" id="s" min="{{today}}" required /></div>
+			<div class="inlineBlock">Departure date: <input type="date" name="end" id="e" min="{{today}}" required /></div>
+			
+			<!-- This is the message displayed when the "Total Price" buttton is clicked, shown using the JS function totalPrice() -->
+			<p id="totalPrice"></p>
+			<input type="hidden" value="{{propInfo[0]}}" name="propName" />
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			
+			<!-- This is the "Total Price" button -->
+			<div class="inlineBlock"><input type="button" value="Total Price" onclick="totalPrice()" class="Bttn2" /></div>
+			
+			<!-- This button submits the booking with the booking dates, user email and property code -->
+			<div class="inlineBlock"><input type="submit" value="Make Booking" class="Bttn2" /></div>
+		</form><br />
+		
+		<div id="calTitle" class="center">
+			<!-- This button changes the year displayed on the calendar to be the year before -->
+			<input class="Bttn2 floatLeft" type="button" value="Previous Year" onclick="prevYear()" />
+			
+			<!-- This button changes the year displayed on the calendar to be the year after -->
+			<input class="Bttn2 floatRight" type="button" value="Next Year" onclick="nextYear()" />
+			
+			<!-- The title for the calendar, explaining what it shows -->
+			<h2>Current Bookings</h2>
+		</div>
+		
+		<center>
+		<!-- This script is used to write the calendar to the webpage, with 3 variables passed into the script tag -->
+		<script id="calendar" data-name="{{dayList1}}" data-name2="{{dayList2}}" data-item="{{propInfo[5]}}">
+			//The list of numbers for confirmed booking dates are separated with the ! between each number to form an array of numbers
+			//Otherwise, it is left blank
+			var dayz1 = document.getElementById("calendar").getAttribute("data-name");
+			if(dayz1 !== "d"){
+				var array1 = dayz1.split("!").map(Number);
+				var dates1 = new Array();
+				for(var i = 0; i < (array1.length) - 1; i += 1){
+					dates1.push(array1[i]);
+				}
+			}
+			else
+			{
+				var dates1 = new Array();
+			}
+			
+			//The list of numbers for unconfirmed booking dates are separated with the ! between each number to form an array of numbers
+			//Otherwise, it is left blank
+			var dayz2 = document.getElementById("calendar").getAttribute("data-name2");
+			if(dayz2 !== "d"){
+				var array2 = dayz2.split("!").map(Number);
+				var dates2 = new Array();
+				for(var i = 0; i < (array2.length) - 1; i += 1){
+					dates2.push(array2[i]);
+				}
+			}
+			else
+			{
+				var dates2 = new Array();
+			}
+			
+			//These variable are lists of the days of the week and month of the year, to be displayed on the calendar
+			var day_of_week = new Array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+			var month_of_year = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+			
+			//The variables defined here are used to get the year, months, dates and days of the week for all dates
+			var Calendar = new Date();
+			var year = Calendar.getFullYear();
+			var month = Calendar.getMonth();    // Returns month (0-11)
+			var today = Calendar.getDate();    // Returns day (1-31)
+			var weekday = Calendar.getDay();    // Returns day (1-31)
+			
+			//Sets the number of days in the week and in the month
+			var DAYS_OF_WEEK = 7;
+			var DAYS_OF_MONTH = 31;
+			
+			//Initiates the variable used to write the calendar to the webpage
+			var cal;
+			
+			//Sets the time of Calendar and default value of booked
+			Calendar.setHours(0,0,0,0)
+			var booked = false;
+			
+			//These variales are defined as the text of html tags to be added to cal
+			var newLine = '</BR>';
+			var TR_start = '<TR>';
+			var TR_end = '</TR>';
+			var highlight_start1 = '<TD><CENTER><TABLE CELLSPACING=0 CELLPADDING=0 BORDER=0 BGCOLOR=46f646><TR><TD><B><CENTER>';
+			var highlight_end1   = '</CENTER></TD></TR></TABLE></CENTER></B>';
+			var highlight_start2 = '<TD><CENTER><FONT COLOR=FFFFFF><TABLE CELLSPACING=0 CELLPADDING=0 BORDER=0 BGCOLOR=FF0000<TR><TD><B><CENTER>';
+			var highlight_end2   = '</CENTER></TD></TR></TABLE></FONT></CENTER></B>';
+			var TD_start = '<TD WIDTH="30"><CENTER>';
+			var TD_end = '</CENTER></TD>';
+			
+			//This function adds the html contant for one month of the given year to cal
+			function display(year, j){
+				//The Calendar date, month and year are set to start as below
+				Calendar.setDate(1);
+				Calendar.setMonth(j);
+				Calendar.setYear(year);
+				
+				//The ID for the calendar month is created
+				var CAL = "CAL" + j
+				
+				//A table is created for the month
+				cal =  '<TABLE CELLSPACING=0 CELLPADDING=0 BORDERCOLOR=FF0000 STYLE = DISPLAY:INLINE-BLOCK ID="' + CAL + '"; ><TR><TD>';
+				
+				//The month title is written in a new table that is added to cal
+				cal += '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2">' + TR_start;
+				cal += '<TD COLSPAN="' + DAYS_OF_WEEK + '" BGCOLOR="#46f646"><CENTER><B>';
+				cal += month_of_year[j] + '   ' + year + '</B>' + TD_end + TR_end;
+				
+				//The headings for the days of the week are added to cal
+				cal += TR_start;
+				for(index = 0; index < DAYS_OF_WEEK; index += 1)
+				{
+					cal += TD_start + day_of_week[index] + TD_end;
+				}
+				cal += TD_end + TR_end;
+				
+				//Fills in the gaps until today's day
+				cal += TR_start;
+				for(index = 0; index < Calendar.getDay(); index++)
+				{
+					cal += TD_start + '  ' + TD_end;
+				}
+				
+				var k = 0;
+				var m = 0;
+				var n = 0;
+				//Loops for each day in Calendar
+				for(index = 0; index <= DAYS_OF_MONTH; index++)
+				{
+					if(index < daysInMonth(j + 1, year))
+					{
+						//Returns the next day to add to cal
+						if( Calendar.getDate() > index )
+						{
+							week_day = Calendar.getDay();
+						}
+						
+						//Sets n to a value so that an extra row or two are added at the end of the month to amke the number of rows the same
+						if(index == 0 && week_day == 0)
+						{
+							n = 1;
+						}
+						if(j == 1 && (week_day == 0 && index == 0))
+						{
+							n = 2;
+						}
+						
+						//Starts a new row for the first day of the week and increments m for the number of rows
+						if(week_day == 0)
+						{
+							cal += TR_start;
+							m += 1;
+						}
+						
+						//Gets the date from Calendar
+						if(week_day != DAYS_OF_WEEK)
+						{
+							var day = Calendar.getDate();
+						}
+						
+						//Sets the start date of 2018 as str to be used in dateDiff()
+						var star = new Date(2018, 0, 1);
+						//Adds the date to cal with associated highlighting and formatting if booked
+						if(dayz1 !== "d" && dayz2 !== "d") {
+							if(dates1.includes((dateDiff(star, Calendar))) == true || dates1.includes((dateDiff(star, Calendar)) - 1) == true) // HIGHLIGHT DATE
+							{	
+								cal += highlight_start1 + day + highlight_end1 + TD_end;
+							}
+							else if(dates2.includes((dateDiff(star, Calendar))) == true || dates2.includes((dateDiff(star, Calendar)) - 1) == true) // HIGHLIGHT DATE
+							{	
+								cal += highlight_start2 + day + highlight_end2 + TD_end;
+							}
+							else
+							{
+								cal += TD_start + day + TD_end;
+							}
+						}
+						else if(dayz1 !== "d") {	
+							if(dates1.includes((dateDiff(star, Calendar))) == true || dates1.includes((dateDiff(star, Calendar)) - 1) == true) // HIGHLIGHT DATE
+							{	
+								cal += highlight_start1 + day + highlight_end1 + TD_end;
+							}
+							else
+							{
+								cal += TD_start + day + TD_end;
+							}
+						}
+						else if(dayz2 !== "d") {	
+							if(dates2.includes((dateDiff(star, Calendar))) == true || dates2.includes((dateDiff(star, Calendar)) - 1) == true) // HIGHLIGHT DATE
+							{	
+								cal += highlight_start2 + day + highlight_end2 + TD_end;
+							}
+							else
+							{
+								cal += TD_start + day + TD_end;
+							}
+						}
+						else
+						{
+							cal += TD_start + day + TD_end;
+						}
+
+						//Ends the row for the last day of the week
+						if(week_day == DAYS_OF_WEEK)
+						{
+							cal += TR_end;
+							k += 1;
+						}
+						
+						//Increments the date until the end of the month
+						Calendar.setDate(Calendar.getDate() + 1);
+					}
+					//Adds the extra rows accroding to the value of m and n
+					if(index == DAYS_OF_MONTH && (m == 4 || n == 1))
+					{
+						cal += TR_start + TD_start + '<FONT COLOR=FFFFFF>.</FONT>' + TD_end + TR_end;
+					}
+					if(index == DAYS_OF_MONTH && n == 2)
+					{
+						cal += TR_start + TD_start + '<FONT COLOR=FFFFFF>.</FONT>' + TD_end + TR_end;
+					}
+				}
+				//Adds the end of the table to cal and returns it
+				cal += '</TD></TR></TABLE></TABLE> ';
+				return cal;
+			}
+			
+			//Loops through the display() function for all months in the given year
+			for (var j = 0; j < 12; j += 1){
+				document.write(display(year, j));
+					if(j % 4 == 3){
+						document.write(newLine);
+					}
+			}
+		</script>
+		</center>
+		<!-- A key for the calendar is included beneathn it for the user to understand the difference between highlighted dates -->
+		<p id="calKey">Key: <span id="calG">10</span> = Confirmed booking date; <span id="calR">10</span> = Unconfirmed booking date</p>
+		
+		<br /><br /><hr /><br />
+		<!-- In this Reviews section, an error message is displayed if no user is signed in -->
+		<h2>Reviews</h2>
+		<p class="error">{{errNoUser[1]}}</p>
+		<!-- If a user is signed in, they can type a comment and/or select a rating to be submitted when the "Submit Review" button is clicked -->
+		<form action="addReview" method="post" id="addReview">
+			<div class="inlineBlock"><span class="vtop">Comment: </span><textarea id="revComment" name="comment" wrap="soft" rows="3" cols="30"></textarea></div>
+			<div class="inlineBlock vtop">Rating: <select name="rating">
+				<option value=""></option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select></div>
+			<input type="hidden" value="{{propInfo[0]}}" name="propName" />
+			<input type="hidden" value="{{userInfo[0]}}" name="uEmail" />
+			<div class="inlineBlock vtop"><input type="submit" value="Submit Review" class="Bttn2" /></div>
+		</form><br />
+		
+		<!-- firstRevs includes the first three reviews if there are more than three, which are displayed when the page is first opened by default -->
+		<div id="firstRevs">
+			{% for review in firstRevs %}
+			<br />
+			<div id="review" class="clearfix">
+				<p class="bold underline">{{review[1]}}</p>
+				<p>{{review[2]}}</p>
+				<p>Rating:  {{review[3]}} / 5</p>
+				<p>{{review[4]}}</p>
+			</div>
+			{% endfor %}
+			
+			<br />
+			<!-- Clicking the following button will hide firstRevs and show allRevs, using JS functions, to allow the user to see all the reviews for the property -->
+			<input class="Bttn2" type="button" id="revButton" value="More reviews" onclick="showRevs('{{revBttn}}')" />
+		</div>
+		
+		<!-- allRevs includes all the reviews for a property -->
+		<div id="allRevs">
+			{% for review in reviews %}
+			<br />
+			<div id="review" class="clearfix">
+				<p class="bold underline">{{review[1]}}</p>
+				<p>{{review[2]}}</p>
+				<p>Rating:  {{review[3]}} / 5</p>
+				<p>{{review[4]}}</p>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+/****************************************  General Formatting  ***************************************************/
+
+/* darker green = #2eb82e; medium green = #46d246; lighter green = #46f646; pastel green = #66ff66; */
+html {
+	margin: 0;
+	padding: 0;
+}
+
+/* Formatting body background-color and font-family
+   (Including submit buttons) */
+body {
+	background-color: #46d246;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	margin: 0;
+	padding: 0;
+}
+
+/******************************************  Button Formatting  ********************************************/
+
+input[type=submit] {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: large;
+	letter-spacing: 0.75px;
+	color: white;
+	background-color: #46d246;
+	height: 3em;
+	width: 18em;
+	border-radius: 6px;
+	border-color: red;
+	border-width: 1.2px;
+	cursor: pointer;
+}
+input[type=text] {
+	width: 24em;
+}
+input[type=password] {
+	width: 24em;
+}
+input[name="areaCode"] {
+	width: 4em;
+}
+input[name="phoneNo"] {
+	width: 19.1em;
+}
+
+/****************************************  Heading Formatting  ***************************************************/
+
+div#heading {
+	position: relative;
+	border: 1px solid white;
+	margin: 0;
+	padding: 0;
+}
+div#heading #logo {
+	/*float: left;*/
+	position: absolute;
+	left: 0;
+	max-height: 5em;
+}
+div#heading h1 {
+	text-align: center;
+	font-weight: lighter;
+}
+
+/***********************************************  div#main Formatting  ************************************/
+
+div#main {
+	border: 1.5px solid red;
+	border-radius: 16px;
+	background-color: white;
+	margin: 1.5em auto 1.5em auto;
+	padding: 2em;
+	width: 20em;
+}
+div p {
+	text-align: center;
+}
+
+/************************************  Horizontal Line Formatting  ******************************************/
+
+hr {
+	background-color: red;
+	border: hidden;
+	height: 1.5px;
+}
+
+/***************************************  Error Message Formatting  ****************************************/
+
+.error {
+	text-align: left;
+	color: red;
+}
+
+/****************************  Specific Layout/Formatting as Classes  **************************************/
+
+.inlineBlock {
+	display: inline-block;
+}
+.floatClear {
+	clear: both;
+}

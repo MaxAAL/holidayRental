@@ -1,0 +1,378 @@
+/****************************************  General Formatting  ***************************************************/
+
+/* darker green = #2eb82e; medium green = #46d246; lighter green = #46f646; pastel green = #66ff66; (shadow) grey = #d9d9d9; */
+html {
+	margin: 0;
+	padding: 0;
+}
+
+/* Formatting body background-color and font-family
+   (Including font-family of submit buttons and textareas) */
+body {
+	background-color: #46f646;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	margin: 0;
+	padding: 0;
+}
+input[type=submit], input[type=button] {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	cursor: pointer;
+}
+textarea {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+/************************************************************************/
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+/************************************************************************/
+
+/****************************************  Header Formatiing  ***************************************************/
+
+header {
+	background-color: #2eb82e;
+	position: relative;
+	margin: 0;
+	padding: 1em;
+}
+header input[type=image]{
+	border: 0.75px solid black;
+	max-height: 6.5em;
+}
+header h1 {
+	text-align: center;
+	padding-right: 2em;
+	font-style: italic;
+	color: white;
+	letter-spacing: 0.5px;
+}
+header p {
+	position: absolute;
+	right: 1em;
+	bottom: 0;
+	padding: 0.15em;
+	font-size: large;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	color: white;
+}
+header input[type=submit] {
+	position: absolute;
+	right: 1em;
+	top: 1em;
+	display: none;
+	width: 5em;
+	height: 2.5em;
+	font-size: large;
+	border-radius: 9px;
+	border-color: red;
+	border-width: 1.5px;
+	background-color: white;
+	font-weight: lighter;
+}
+header #admin {
+	position: absolute;
+	right: 6.5em;
+	top: 1em;
+	display: none;
+}
+
+/***********************************************  div#main Formatting  ************************************/
+
+div#main {
+	position: relative;
+	overflow: auto;
+	border: 0.75px solid black;
+	border-radius: 10px;
+	background-color: white; 
+	margin: 2em;
+	margin-top: 0;
+	padding: 2em;
+}
+div#main h1 {
+	text-align: center;
+	font-weight: lighter;
+}
+
+/********************  Formatting for property info and review sections  *************************************/
+
+div#propDets {
+	width: 400px;
+	padding-left: 2em;
+}
+div#calTitle {
+	width: 58em;
+	max-width: 100%;
+	text-align: center;
+}
+div#review {
+	width: 400px;
+	padding: 0 1em 0 1em;
+	max-width: 100%;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+#revComment {
+	width: 200px;
+	height: 50px;
+}
+
+/**************************************  Gallery Formatting  ***********************************************/
+
+div#gallery {
+	width: 40em;
+}
+.column {
+    float: left;
+    width: 8em;
+    padding: 5px;
+}
+/* Style the images inside the grid */
+.column img {
+    opacity: 0.8; 
+    cursor: pointer; 
+}
+.column img:hover {
+    opacity: 1;
+}
+#expandedImg {
+	border: 0.75px solid black;
+	border-top-width: 1px;
+	border-radius: 15px;
+	height: 25em;
+	width: 40em;
+}
+
+/************************************  Other Images Formatting  ********************************************/
+
+img {
+	max-width: 100%;
+}
+#homePageImg{
+	border-right: 1px solid black;
+	border-radius: 4px 0 0 3px;
+	max-height: 17.5em;
+	width: 28em;
+}
+#attracImg {
+	border: 0.75px solid black;
+	border-radius: 10px;
+	max-height: 28em;
+	width: 28em;
+}
+
+/*************************************  Admin Table Formatting  ********************************************/
+
+table#adminTable {
+	width: 100%;
+	margin: 0;
+	padding: 1em;
+}
+table#adminTable, table#adminTable th, table#adminTable td {
+	background-color: white;
+	border: 0.75px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+/*************************************  Home Table Formatting  ********************************************/
+
+table#homeTable {
+	background-color: #46f646;
+	width: 70%;
+	border: 0;
+	margin: auto;
+	padding: 2em;
+	padding-top: 0;
+	border-spacing: 1em;
+}
+table#homeTable td {
+	position: relative;
+	display: block;
+	border: 1.5px solid red;
+	border-radius: 4px;
+	background-color: white;
+	min-width: 60em;
+	margin: 0;
+	padding: 0;
+}
+table td#filter {
+	padding: 1em;
+	text-align: center;
+}
+table #availProps {
+	width: 59%;
+	height: 12em;
+	margin: 0.25em;
+	padding: 0 1em 1em 1em;
+}
+table #propDesc {
+	width: 100%;
+}
+table #viewProp {
+	position: absolute;
+	bottom: 0.75em;
+}
+
+/******************************************  Button Formatting  ********************************************/
+
+.Bttn1 {
+	background-color: #46f646;
+	border: 1.2px solid red;
+	border-radius: 25px;
+	color: #145214;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	padding: 6px;
+	font-size: 14px;
+}
+.Bttn2 {
+	background-color: #46f646;
+	border: 1.2px solid red;
+	border-radius: 5px;
+	color: #145214;
+	font-weight: bold;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+}
+.adminBttn {
+	margin: 4px;
+}
+.filBttn input[type=submit] {
+	margin: 5px;
+}
+
+/******************************************  Footer Formatting  ********************************************/
+
+footer {
+	background-color: #2eb82e;
+	border: 0.75px solid black;
+	border-radius: 0.3em;
+	width: 90%;
+	margin: 1em auto 1em auto;
+	padding: 1em;
+	padding-left: 2em;
+	color: white;
+	letter-spacing: 0.65px;
+}
+footer #conTitle {
+	text-align: center;
+	color: white;
+	padding: 5px;
+	font-weight: lighter;
+}
+
+/************************************  Horizontal Line Formatting  ******************************************/
+
+hr {
+	background-color: red;
+	border: hidden;
+	height: 1.6px;
+}
+
+/************************************  Calendar Key Formatting  ********************************************/
+
+#calKey {
+	margin-left: 15%;
+}
+#calG {
+	color: black;
+	font-weight: bold;
+	background-color: #46f646;	
+}
+#calR {
+	color: white;
+	font-weight: bold;
+	background-color: #ff0000;	
+}
+
+/************************************  Review Bars Formatting  *********************************************/
+
+#revMain{
+	width: 350px;
+	height: 50px;
+	display: flex;
+}
+
+/*Total of 5, 1 is positive, 2 is 5-positive*/
+#revMain div:nth-of-type(1) {flex-grow: 0;}
+#revMain div:nth-of-type(2) {flex-grow: 0;}
+
+/*Total is number of reviews*/
+#revComp{
+	width: 350px;
+	height: 50px;
+	display: flex;
+}
+
+#revComp div:nth-of-type(1) {flex-grow: 0;}
+#revComp div:nth-of-type(2) {flex-grow: 0;}
+#revComp div:nth-of-type(3) {flex-grow: 0;}
+#revComp div:nth-of-type(4) {flex-grow: 0;}
+#revComp div:nth-of-type(5) {flex-grow: 0;}
+
+/****************************  Booking Popup Message Formatting   *****************************************/
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+	display: none;
+	font-weight: bold;
+	letter-spacing: 0.25px;
+}
+.closebtn {
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.closebtn:hover {
+    color: black;
+}
+
+/***************************************  Error Message Formatting  ****************************************/
+
+.error {
+	text-align: left;
+	color: red;
+}
+
+/****************************  Specific Layout/Formatting as Classes  **************************************/
+
+.inlineBlock {
+	display: inline-block;
+}
+.halfWidth {
+	width: 49%;
+}
+.vtop {
+	vertical-align: top;
+}
+.vbottom {
+	vertical-align: bottom;
+}
+.center {
+	margin: auto;
+}
+.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.floatClear {
+	clear: both;
+}
+.clearfix {
+	overflow: auto;
+}
+.bold {
+	font-weight: bold;
+}
+.underline {
+	text-decoration: underline;
+}
